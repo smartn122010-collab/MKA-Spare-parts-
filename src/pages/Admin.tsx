@@ -7,6 +7,9 @@ import { Package, Tag, LayoutDashboard, Edit2, Trash2, Plus, X, Lock, Unlock, Sa
 import { useAuth } from '../AuthContext';
 
 export function Admin() {
+  const { user } = useAuth();
+  const isAdmin = user?.email === 'smartnp09812@gmail.com' || user?.uid === 'NmCEpOC9DcaEwfc22bmxF79moJG3';
+
   const [pinAuthenticated, setPinAuthenticated] = useState(false);
   const [savedPin, setSavedPin] = useState<string | null>(localStorage.getItem('adminPin'));
   const [pinInput, setPinInput] = useState('');
@@ -141,6 +144,20 @@ export function Admin() {
     setPinInput('');
     setConfirmPinInput('');
   };
+
+  if (!isAdmin) {
+    return (
+      <div className="flex h-full items-center justify-center p-6">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-bg-panel border border-zinc-800 p-8 rounded-3xl w-full max-w-md shadow-2xl text-center">
+          <div className="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-red">
+            <Lock size={32} />
+          </div>
+          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <p className="text-zinc-400">You do not have permission to view this page.</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   if (!pinAuthenticated) {
     return (

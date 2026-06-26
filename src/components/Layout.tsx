@@ -8,13 +8,15 @@ export function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user } = useAuth();
   
+  const isAdmin = user?.email === 'smartnp09812@gmail.com' || user?.uid === 'NmCEpOC9DcaEwfc22bmxF79moJG3';
+
   const navItems = [
     { to: "/", icon: Home, label: "Home" },
     { to: "/search", icon: Search, label: "Search" },
     { to: "/products", icon: Package, label: "Products" },
     { to: "/offers", icon: Tag, label: "Offers" },
     { to: "/profile", icon: User, label: "Profile" },
-    { to: "/admin", icon: Settings, label: "Admin Panel" },
+    ...(isAdmin ? [{ to: "/admin", icon: Settings, label: "Admin Panel" }] : []),
   ];
 
   return (
