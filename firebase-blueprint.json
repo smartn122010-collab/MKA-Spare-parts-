@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A motorcycle spare part.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "rating": { "type": "number" },
+        "description": { "type": "string" },
+        "inStock": { "type": "boolean" },
+        "imageUrl": { "type": "string" }
+      }
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "A discount code.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "discount": { "type": "string" },
+        "expiryDate": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Products collection"
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Offers collection"
+    }
+  }
+}
