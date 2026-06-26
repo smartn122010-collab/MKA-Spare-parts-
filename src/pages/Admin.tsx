@@ -7,7 +7,7 @@ import { Package, Tag, LayoutDashboard, Edit2, Trash2, Plus, X, Lock, Unlock, Sa
 import { useAuth } from '../AuthContext';
 
 export function Admin() {
-  const { user } = useAuth();
+  const { user, signInWithGoogle, logout, loading } = useAuth();
   const isAdmin = user?.email === 'smartnp09812@gmail.com' || user?.uid === 'NmCEpOC9DcaEwfc22bmxF79moJG3';
 
   const [pinAuthenticated, setPinAuthenticated] = useState(false);
@@ -145,6 +145,25 @@ export function Admin() {
     setConfirmPinInput('');
   };
 
+  if (loading) {
+    return <div className="flex h-full items-center justify-center text-white">Loading...</div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="flex h-full items-center justify-center p-6">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-bg-panel border border-zinc-800 p-8 rounded-3xl w-full max-w-md shadow-2xl text-center">
+          <div className="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-red">
+            <Lock size={32} />
+          </div>
+          <h2 className="text-2xl font-bold mb-4">Admin Access</h2>
+          <p className="text-zinc-400 mb-6">Sign in with an admin account to continue.</p>
+          <button onClick={signInWithGoogle} className="w-full bg-brand-red hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-colors">Sign In with Google</button>
+        </motion.div>
+      </div>
+    );
+  }
+
   if (!isAdmin) {
     return (
       <div className="flex h-full items-center justify-center p-6">
@@ -153,7 +172,8 @@ export function Admin() {
             <Lock size={32} />
           </div>
           <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
-          <p className="text-zinc-400">You do not have permission to view this page.</p>
+          <p className="text-zinc-400 mb-6">Signed in as {user.email || user.uid}. You do not have admin privileges.</p>
+          <button onClick={logout} className="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold transition-colors">Sign Out</button>
         </motion.div>
       </div>
     );
