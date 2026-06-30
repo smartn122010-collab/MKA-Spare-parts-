@@ -3,12 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { Product } from '../types';
-import { motion } from 'motion/react';
-import { Search as SearchIcon, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Search as SearchIcon, Star, X, ShoppingCart } from 'lucide-react';
 
 export function Search() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -79,13 +80,20 @@ export function Search() {
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass-panel glass-panel-interactive rounded-[24px] overflow-hidden group"
+              whileHover={{ y: -5 }}
+              onClick={() => setSelectedProduct(product)}
+              className="glass-panel glass-panel-interactive rounded-[24px] overflow-hidden cursor-pointer group"
             >
               <div className="h-48 bg-white/[0.01] relative overflow-hidden border-b border-white/6">
                 {product.imageUrl ? (
                   <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-zinc-500 font-mono text-xs">No Image</div>
+                )}
+                {!product.inStock && (
+                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-sm">
+                    <span className="bg-gradient-brand text-white px-4 py-1.5 rounded-full font-black text-xs uppercase tracking-wider shadow-lg">Out of Stock</span>
+                  </div>
                 )}
               </div>
               <div className="p-5.5">
@@ -103,6 +111,75 @@ export function Search() {
           ))}
         </div>
       )}
+
+      {/* Product Details Modal */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProduct(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.93, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.93, y: 20 }}
+              transition={{ duration: 0.4, cubicBezier: [0.16, 1, 0.3, 1] }}
+              className="glass-panel bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-[32px] w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 flex flex-col md:flex-row shadow-[0_32px_64px_-15px_rgba(0,0,0,0.8)]"
+            >
+              <button 
+                onClick={() => setSelectedProduct(null)}
+                className="absolute top-4 right-4 p-2.5 bg-black/40 hover:bg-gradient-brand rounded-full text-white transition-all z-20 hover:scale-110 cursor-pointer border border-white/10"
+              >
+                <X size={18} />
+              </button>
+              
+              <div className="w-full md:w-1/2 h-64 md:h-auto bg-white/[0.01] relative overflow-hidden border-r border-white/6">
+                {selectedProduct.imageUrl ? (
+                   <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-full object-cover" />
+                ) : (
+                   <div className="w-full h-full flex items-center justify-center text-zinc-500 font-mono text-xs">No Image</div>
+                )}
+              </div>
+              
+              <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col">
+                <div className="text-xs text-brand-blue font-black uppercase tracking-widest mb-2">{selectedProduct.category}</div>
+                <h2 className="text-3xl font-black mb-4 text-white uppercase tracking-tight">{selectedProduct.name}</h2>
+                
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  <span className="text-3xl font-black text-white">₹{selectedProduct.price}</span>
+                  <div className="flex items-center bg-white/5 border border-white/5 px-3 py-1 rounded-full text-yellow-500">
+                    <Star size={15} className="fill-current mr-1.5" />
+                    <span className="font-bold text-sm">{selectedProduct.rating}</span>
+                  </div>
+                  <span className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider ${selectedProduct.inStock ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'}`}>
+                    {selectedProduct.inStock ? 'In Stock' : 'Out of Stock'}
+                  </span>
+                </div>
+
+                <div className="flex-1 border-t border-white/6 pt-6">
+                  <h4 className="text-base font-extrabold text-white uppercase tracking-wider mb-2.5">Description</h4>
+                  <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">{selectedProduct.description}</p>
+                </div>
+
+                <button 
+                  onClick={() => {
+                    navigate(`/register-customer`, { state: { product: selectedProduct } });
+                  }}
+                  disabled={!selectedProduct.inStock}
+                  className="w-full mt-8 flex items-center justify-center gap-2.5 bg-gradient-brand hover:scale-[1.02] active:scale-[0.98] disabled:bg-white/5 disabled:border-white/5 disabled:scale-100 disabled:text-zinc-500 disabled:shadow-none text-white py-4 rounded-2xl font-bold transition-all text-base shadow-lg shadow-brand-rose/25 cursor-pointer border border-white/10"
+                >
+                  <ShoppingCart size={20} />
+                  {selectedProduct.inStock ? 'Order Now via WhatsApp' : 'Currently Unavailable'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
