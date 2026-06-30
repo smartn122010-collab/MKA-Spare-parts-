@@ -89,7 +89,7 @@ export function Layout() {
           {/* Right Controls Area */}
           <div className="flex items-center gap-2.5">
             {user ? (
-              <div className="flex items-center gap-2 bg-white/[0.02] border border-white/5 px-3 py-1.5 rounded-xl">
+              <div className="flex items-center gap-2.5 bg-white/[0.02] border border-white/5 px-3 py-1.5 rounded-xl">
                 {user.photoURL ? (
                   <img src={user.photoURL} alt="Profile" className="w-5.5 h-5.5 rounded-full border border-brand-rose/40" referrerPolicy="no-referrer" />
                 ) : (
@@ -98,6 +98,18 @@ export function Layout() {
                   </div>
                 )}
                 <span className="hidden lg:inline text-xs font-bold text-zinc-300 max-w-[100px] truncate">{user.displayName || 'Rider'}</span>
+                
+                {/* Elegant Glassmorphic Admin Action Panel for ka8255633@gmail.com / Admin */}
+                {isAdmin && (
+                  <button
+                    onClick={() => navigate('/admin')}
+                    title="Access Admin Controls"
+                    className="flex items-center gap-1 px-2.5 py-1 bg-white/5 hover:bg-gradient-brand border border-white/10 hover:border-brand-rose/30 rounded-lg text-[9px] font-black uppercase tracking-wider text-white transition-all cursor-pointer shadow-md hover:shadow-brand-rose/10"
+                  >
+                    <Settings size={11} className="text-brand-rose group-hover:text-white" />
+                    <span>Admin Controls</span>
+                  </button>
+                )}
                 
                 <button 
                   onClick={() => logout()}
