@@ -140,8 +140,8 @@ export function Layout() {
 
       {/* Premium Glass Prism Mobile Bottom Navigation Dock (Visible on Mobile Only) */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-40">
-        <div className="glass-prism rounded-[24px] px-3.5 py-3 border border-white/10 shadow-[0_16px_32px_rgba(0,0,0,0.6)] flex items-center justify-around backdrop-blur-2xl">
-          {navItems.slice(0, 6).map((item) => (
+        <div className="glass-prism rounded-[24px] px-2.5 py-3 border border-white/10 shadow-[0_16px_32px_rgba(0,0,0,0.6)] flex items-center justify-around backdrop-blur-2xl">
+          {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
