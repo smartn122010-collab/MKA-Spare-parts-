@@ -17,23 +17,24 @@ export function Profile() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto flex flex-col items-center pt-24">
+    <div className="p-8 max-w-2xl mx-auto flex flex-col items-center pt-24 relative">
       <motion.div 
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.94, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-bg-panel border border-zinc-800 p-10 rounded-3xl w-full flex flex-col items-center shadow-2xl backdrop-blur-md relative overflow-hidden"
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="glass-panel border-white/10 p-10 md:p-12 rounded-[32px] w-full flex flex-col items-center shadow-2xl relative overflow-hidden"
       >
-        <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-brand-red/20 to-transparent" />
+        <div className="absolute top-0 w-full h-36 bg-gradient-to-r from-brand-rose/20 via-brand-violet/20 to-brand-blue/10 border-b border-white/6" />
         
-        <div className="relative group cursor-pointer mt-4" onClick={() => fileInputRef.current?.click()}>
-          <div className="w-32 h-32 rounded-full border-4 border-bg-dark overflow-hidden bg-zinc-800 flex items-center justify-center relative z-10">
+        <div className="relative group cursor-pointer mt-8" onClick={() => fileInputRef.current?.click()}>
+          <div className="w-32 h-32 rounded-full border-4 border-white/10 overflow-hidden bg-white/5 flex items-center justify-center relative z-10 shadow-xl transition-all group-hover:scale-105">
             {avatarUrl ? (
               <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <User size={48} className="text-zinc-500" />
+              <User size={44} className="text-zinc-400" />
             )}
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <Camera size={32} className="text-white" />
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <Camera size={24} className="text-white" />
             </div>
           </div>
           <input 
@@ -45,14 +46,14 @@ export function Profile() {
           />
         </div>
 
-        <h2 className="text-2xl font-bold mt-6 z-10">{user?.displayName || 'MKA Customer'}</h2>
-        <p className="text-zinc-400 z-10 mb-8">{user?.email}</p>
+        <h2 className="text-2xl font-black mt-6 z-10 text-white uppercase tracking-wider">{user?.displayName || 'MKA Customer'}</h2>
+        <p className="text-zinc-400 font-medium z-10 mb-8 text-sm">{user?.email}</p>
 
         <button 
           onClick={logout}
-          className="flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-brand-red text-white rounded-xl transition-colors z-10 font-medium"
+          className="flex items-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-brand-rose border border-white/8 hover:border-white/10 text-white rounded-2xl transition-all duration-300 z-10 font-bold text-xs uppercase tracking-widest cursor-pointer hover:shadow-lg hover:shadow-brand-rose/20 active:scale-95"
         >
-          <LogOut size={20} />
+          <LogOut size={16} />
           Sign Out
         </button>
       </motion.div>

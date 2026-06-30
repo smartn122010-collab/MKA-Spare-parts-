@@ -33,59 +33,70 @@ export function Offers() {
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto min-h-full">
-      <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-        <span className="w-2 h-8 bg-brand-red rounded-full" />
+    <div className="p-6 md:p-10 max-w-5xl mx-auto min-h-full relative">
+      <h2 className="text-3xl font-black mb-10 flex items-center gap-3">
+        <span className="w-2.5 h-8 bg-gradient-brand rounded-full" />
         Exclusive Offers
       </h2>
 
-      <div className="bg-brand-red/10 border border-brand-red/30 rounded-2xl p-6 mb-10 flex gap-4">
-        <Tag className="text-brand-red shrink-0" size={24} />
+      <div className="glass-panel border-white/10 rounded-[24px] p-6 mb-10 flex gap-4.5 relative overflow-hidden shadow-xl">
+        <div className="absolute top-0 right-0 w-24 h-24 bg-brand-rose/5 rounded-full blur-2xl" />
+        <Tag className="text-brand-rose shrink-0 animate-bounce mt-1" size={22} />
         <div>
-          <h4 className="font-bold text-brand-red mb-1">How to Redeem</h4>
-          <p className="text-zinc-300 text-sm">Copy the offer code and visit the MKA motor shop branch. Tell the code to the manager to get the discount on your product price.</p>
+          <h4 className="font-extrabold text-brand-rose uppercase tracking-wider text-sm mb-1.5">How to Redeem</h4>
+          <p className="text-zinc-300 text-sm leading-relaxed">Copy the offer code and visit the MKA motor shop branch. Present the active code to the manager to instantly receive a discount on your product order.</p>
         </div>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20 text-brand-red animate-pulse">Loading offers...</div>
+        <div className="flex flex-col items-center justify-center py-32 text-brand-rose">
+          <div className="w-12 h-12 rounded-full border-4 border-brand-violet/20 border-t-brand-rose animate-spin mb-4" />
+          <p className="font-bold animate-pulse text-sm tracking-wider uppercase">Loading offers...</p>
+        </div>
       ) : offers.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-zinc-500">
-          <Tag size={64} className="mb-4 opacity-50" />
-          <p className="text-xl">No active offers at the moment.</p>
+        <div className="flex flex-col items-center justify-center py-24 text-zinc-500">
+          <Tag size={64} className="mb-4 opacity-50 text-brand-violet animate-pulse" />
+          <p className="text-xl font-bold">No active offers at the moment.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {offers.map((offer) => {
+          {offers.map((offer, idx) => {
             const isExpired = new Date(offer.expiryDate) < new Date();
+            // Alternating glass styles of rose, violet, and lite blue mixed colour palette
+            const glassStyles = ['glass-card-rose', 'glass-card-violet', 'glass-card-blue'];
+            const chosenStyle = glassStyles[idx % glassStyles.length];
             
             return (
               <motion.div 
                 key={offer.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`bg-bg-panel border rounded-2xl p-6 relative overflow-hidden ${isExpired ? 'border-zinc-800 opacity-60' : 'border-zinc-700 hover:border-brand-red'}`}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className={`rounded-[28px] p-7 relative overflow-hidden transition-all duration-300 hover:scale-[1.02] border ${chosenStyle} ${isExpired ? 'opacity-50 border-zinc-800 shadow-none' : 'shadow-lg hover:shadow-2xl'}`}
               >
                 {isExpired && (
-                  <div className="absolute top-4 right-4 text-xs font-bold bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">Expired</div>
+                  <div className="absolute top-4 right-4 text-[10px] font-black uppercase tracking-wider bg-white/5 text-zinc-400 px-3 py-1 rounded-full border border-white/5">Expired</div>
                 )}
-                <div className="text-3xl font-bold text-white mb-2">{offer.discount} OFF</div>
-                <p className="text-zinc-400 mb-6">{offer.description}</p>
+                <div className="text-4xl font-black text-white mb-2 tracking-tight uppercase">
+                  {offer.discount} <span className="text-gradient">OFF</span>
+                </div>
+                <p className="text-zinc-300 text-sm mb-6.5 font-medium leading-relaxed">{offer.description}</p>
                 
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 font-mono text-center tracking-widest text-lg text-brand-red">
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="flex-1 bg-black/25 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3.5 font-mono text-center tracking-widest text-xl font-black text-white select-all">
                     {offer.code}
                   </div>
                   <button 
                     onClick={() => !isExpired && handleCopy(offer.id, offer.code)}
                     disabled={isExpired}
-                    className="p-3 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 disabled:hover:bg-zinc-800 rounded-xl transition-colors text-white"
+                    className="p-4 bg-white/5 hover:bg-white/10 disabled:opacity-40 rounded-2xl transition-all text-white border border-white/10 cursor-pointer active:scale-90"
+                    title="Copy Code"
                   >
-                    {copiedId === offer.id ? <Check size={24} className="text-green-500" /> : <Copy size={24} />}
+                    {copiedId === offer.id ? <Check size={20} className="text-emerald-400" /> : <Copy size={20} className="text-zinc-200" />}
                   </button>
                 </div>
                 
-                <div className="mt-4 text-xs text-zinc-500 text-center">
+                <div className="mt-5 text-[11px] font-bold tracking-wider text-zinc-400 text-center uppercase">
                   Valid until {new Date(offer.expiryDate).toLocaleDateString()}
                 </div>
               </motion.div>

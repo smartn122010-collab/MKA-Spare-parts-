@@ -151,14 +151,24 @@ export function Admin() {
 
   if (!user) {
     return (
-      <div className="flex h-full items-center justify-center p-6">
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-bg-panel border border-zinc-800 p-8 rounded-3xl w-full max-w-md shadow-2xl text-center">
-          <div className="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-red">
-            <Lock size={32} />
+      <div className="flex h-full items-center justify-center p-6 relative">
+        <motion.div 
+          initial={{ scale: 0.94, opacity: 0 }} 
+          animate={{ scale: 1, opacity: 1 }} 
+          className="glass-panel border-white/10 p-10 rounded-[32px] w-full max-w-md shadow-2xl text-center relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-rose/5 rounded-full blur-2xl" />
+          <div className="w-16 h-16 bg-gradient-brand rounded-full flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-brand-rose/25">
+            <Lock size={26} />
           </div>
-          <h2 className="text-2xl font-bold mb-4">Admin Access</h2>
-          <p className="text-zinc-400 mb-6">Sign in with an admin account to continue.</p>
-          <button onClick={signInWithGoogle} className="w-full bg-brand-red hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-colors">Sign In with Google</button>
+          <h2 className="text-2xl font-black mb-2 text-white uppercase tracking-wider">Admin Access</h2>
+          <p className="text-zinc-400 text-sm mb-8">Sign in with an authenticated administrator account to manage products and offers.</p>
+          <button 
+            onClick={signInWithGoogle} 
+            className="w-full bg-gradient-brand hover:scale-[1.02] active:scale-[0.98] text-white py-4 rounded-2xl font-black uppercase tracking-wider text-xs border border-white/10 shadow-lg shadow-brand-rose/20 cursor-pointer transition-all"
+          >
+            Sign In with Google
+          </button>
         </motion.div>
       </div>
     );
@@ -166,14 +176,24 @@ export function Admin() {
 
   if (!isAdmin) {
     return (
-      <div className="flex h-full items-center justify-center p-6">
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-bg-panel border border-zinc-800 p-8 rounded-3xl w-full max-w-md shadow-2xl text-center">
-          <div className="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-red">
-            <Lock size={32} />
+      <div className="flex h-full items-center justify-center p-6 relative">
+        <motion.div 
+          initial={{ scale: 0.94, opacity: 0 }} 
+          animate={{ scale: 1, opacity: 1 }} 
+          className="glass-panel border-white/10 p-10 rounded-[32px] w-full max-w-md shadow-2xl text-center relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-rose/5 rounded-full blur-2xl" />
+          <div className="w-16 h-16 bg-gradient-brand rounded-full flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-brand-rose/25">
+            <Lock size={26} />
           </div>
-          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
-          <p className="text-zinc-400 mb-6">Signed in as {user.email || user.uid}. You do not have admin privileges.</p>
-          <button onClick={logout} className="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold transition-colors">Sign Out</button>
+          <h2 className="text-2xl font-black mb-2 text-white uppercase tracking-wider">Access Denied</h2>
+          <p className="text-zinc-400 text-sm mb-8 leading-relaxed">Signed in as <span className="text-brand-rose font-bold">{user.email || user.uid}</span>. Your credentials lack administrative privileges.</p>
+          <button 
+            onClick={logout} 
+            className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white py-4 rounded-2xl font-black uppercase tracking-wider text-xs transition-all cursor-pointer"
+          >
+            Sign Out
+          </button>
         </motion.div>
       </div>
     );
@@ -181,24 +201,52 @@ export function Admin() {
 
   if (!pinAuthenticated) {
     return (
-      <div className="flex h-full items-center justify-center p-6">
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-bg-panel border border-zinc-800 p-8 rounded-3xl w-full max-w-md shadow-2xl">
-          <div className="w-16 h-16 bg-brand-red/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-red">
-            {savedPin ? <Lock size={32} /> : <Save size={32} />}
+      <div className="flex h-full items-center justify-center p-6 relative">
+        <motion.div 
+          initial={{ scale: 0.94, opacity: 0 }} 
+          animate={{ scale: 1, opacity: 1 }} 
+          className="glass-panel border-white/10 p-10 rounded-[32px] w-full max-w-md shadow-2xl relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-violet/5 rounded-full blur-2xl" />
+          <div className="w-16 h-16 bg-gradient-brand rounded-full flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-brand-rose/25">
+            {savedPin ? <Lock size={26} /> : <Save size={26} />}
           </div>
-          <h2 className="text-2xl font-bold text-center mb-6">{savedPin ? 'Enter Admin PIN' : 'Set Admin PIN'}</h2>
+          <h2 className="text-2xl font-black text-center text-white uppercase tracking-wider mb-8">{savedPin ? 'Enter Admin PIN' : 'Set Admin PIN'}</h2>
           
-          <form onSubmit={handlePinSubmit} className="flex flex-col gap-4">
-            <input type="password" placeholder="Enter PIN" value={pinInput} onChange={e => setPinInput(e.target.value)} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-center tracking-widest text-xl focus:border-brand-red outline-none" required />
+          <form onSubmit={handlePinSubmit} className="flex flex-col gap-5">
+            <input 
+              type="password" 
+              placeholder="Enter PIN" 
+              value={pinInput} 
+              onChange={e => setPinInput(e.target.value)} 
+              className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-4 text-center tracking-widest text-2xl font-black text-white focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] outline-none transition-all" 
+              required 
+            />
             {!savedPin && (
-              <input type="password" placeholder="Confirm PIN" value={confirmPinInput} onChange={e => setConfirmPinInput(e.target.value)} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-center tracking-widest text-xl focus:border-brand-red outline-none" required />
+              <input 
+                type="password" 
+                placeholder="Confirm PIN" 
+                value={confirmPinInput} 
+                onChange={e => setConfirmPinInput(e.target.value)} 
+                className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-4 text-center tracking-widest text-2xl font-black text-white focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] outline-none transition-all" 
+                required 
+              />
             )}
-            {pinError && <p className="text-brand-red text-sm text-center">{pinError}</p>}
-            <button type="submit" className="bg-brand-red hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-colors mt-2">
+            {pinError && <p className="text-brand-rose text-xs font-bold text-center animate-shake">{pinError}</p>}
+            <button 
+              type="submit" 
+              className="bg-gradient-brand hover:scale-[1.02] active:scale-[0.98] text-white py-4 rounded-2xl font-black uppercase tracking-wider text-xs border border-white/10 shadow-lg shadow-brand-rose/20 cursor-pointer transition-all mt-2"
+            >
               {savedPin ? 'Unlock Admin Panel' : 'Save PIN & Enter'}
             </button>
             {savedPin && (
-              <button type="button" onClick={resetPin} className="text-zinc-500 hover:text-white text-sm mt-2 transition-colors">Reset PIN (Warning: Clears current PIN)</button>
+              <button 
+                type="button" 
+                onClick={resetPin} 
+                className="text-zinc-500 hover:text-brand-rose text-xs font-bold uppercase tracking-wider mt-2 transition-colors cursor-pointer"
+              >
+                Reset PIN (Clears current PIN)
+              </button>
             )}
           </form>
         </motion.div>
@@ -207,38 +255,64 @@ export function Admin() {
   }
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto h-full flex flex-col overflow-y-auto pb-32">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold flex items-center gap-3">
-          <span className="w-2 h-8 bg-brand-red rounded-full" /> Admin Panel
+    <div className="p-6 md:p-10 max-w-7xl mx-auto h-full flex flex-col overflow-y-auto pb-32 relative">
+      <div className="flex items-center justify-between mb-10">
+        <h2 className="text-3xl font-black flex items-center gap-3">
+          <span className="w-2.5 h-8 bg-gradient-brand rounded-full" /> Admin Panel
         </h2>
-        <button onClick={() => setPinAuthenticated(false)} className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
-          <Unlock size={20} /> Lock
+        <button 
+          onClick={() => setPinAuthenticated(false)} 
+          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-all bg-white/5 hover:bg-white/10 px-4 py-2 border border-white/5 hover:border-white/10 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer"
+        >
+          <Unlock size={14} /> Lock
         </button>
       </div>
 
-      <div className="flex gap-2 mb-8 bg-zinc-900/50 p-1 rounded-2xl w-fit">
-        <button onClick={() => setActiveTab('dashboard')} className={`px-6 py-2 rounded-xl flex items-center gap-2 font-medium transition-colors ${activeTab === 'dashboard' ? 'bg-brand-red text-white shadow-lg' : 'text-zinc-400 hover:text-white'}`}><LayoutDashboard size={18} /> Dashboard</button>
-        <button onClick={() => setActiveTab('products')} className={`px-6 py-2 rounded-xl flex items-center gap-2 font-medium transition-colors ${activeTab === 'products' ? 'bg-brand-red text-white shadow-lg' : 'text-zinc-400 hover:text-white'}`}><Package size={18} /> Products</button>
-        <button onClick={() => setActiveTab('offers')} className={`px-6 py-2 rounded-xl flex items-center gap-2 font-medium transition-colors ${activeTab === 'offers' ? 'bg-brand-red text-white shadow-lg' : 'text-zinc-400 hover:text-white'}`}><Tag size={18} /> Offers</button>
+      <div className="flex gap-1.5 mb-10 bg-white/[0.02] border border-white/6 p-1.5 rounded-2xl w-fit backdrop-blur-md">
+        <button 
+          onClick={() => setActiveTab('dashboard')} 
+          className={`px-5 py-2.5 rounded-xl flex items-center gap-2 text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'dashboard' ? 'bg-gradient-brand text-white shadow-md shadow-brand-rose/10' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+        >
+          <LayoutDashboard size={14} /> Dashboard
+        </button>
+        <button 
+          onClick={() => setActiveTab('products')} 
+          className={`px-5 py-2.5 rounded-xl flex items-center gap-2 text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'products' ? 'bg-gradient-brand text-white shadow-md shadow-brand-rose/10' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+        >
+          <Package size={14} /> Products
+        </button>
+        <button 
+          onClick={() => setActiveTab('offers')} 
+          className={`px-5 py-2.5 rounded-xl flex items-center gap-2 text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'offers' ? 'bg-gradient-brand text-white shadow-md shadow-brand-rose/10' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
+        >
+          <Tag size={14} /> Offers
+        </button>
       </div>
 
       {activeTab === 'dashboard' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { key: 'totalStock', label: 'Total Stock', color: 'from-red-500/20 to-brand-red/5', border: 'border-red-500/30' },
-            { key: 'totalServices', label: 'Total Services', color: 'from-amber-500/20 to-amber-500/5', border: 'border-amber-500/30' },
-            { key: 'todaySales', label: 'Today\'s Sales (₹)', color: 'from-emerald-500/20 to-emerald-500/5', border: 'border-emerald-500/30' },
-            { key: 'monthSales', label: 'Month Sales (₹)', color: 'from-blue-500/20 to-blue-500/5', border: 'border-blue-500/30' },
-            { key: 'yearSales', label: 'Year Sales (₹)', color: 'from-purple-500/20 to-purple-500/5', border: 'border-purple-500/30' },
-          ].map(stat => (
-            <div key={stat.key} className={`bg-gradient-to-br ${stat.color} border ${stat.border} p-6 rounded-3xl relative group overflow-hidden`}>
-              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <button onClick={() => { setEditingStat(stat.key as keyof AdminStats); setStatEditValue(stats[stat.key as keyof AdminStats].toString()); }} className="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black rounded-full transition-colors z-10">
-                <Edit2 size={16} />
+            { key: 'totalStock', label: 'Total Stock', styleClass: 'glass-card-rose' },
+            { key: 'totalServices', label: 'Total Services', styleClass: 'glass-card-violet' },
+            { key: 'todaySales', label: 'Today\'s Sales', styleClass: 'glass-card-blue', prefix: '₹' },
+            { key: 'monthSales', label: 'Month Sales', styleClass: 'glass-card-rose', prefix: '₹' },
+            { key: 'yearSales', label: 'Year Sales', styleClass: 'glass-card-violet', prefix: '₹' },
+          ].map((stat, sIdx) => (
+            <div 
+              key={stat.key} 
+              className={`rounded-[28px] p-6.5 relative group overflow-hidden border transition-all duration-300 hover:scale-[1.02] shadow-lg ${stat.styleClass}`}
+            >
+              <button 
+                onClick={() => { setEditingStat(stat.key as keyof AdminStats); setStatEditValue(stats[stat.key as keyof AdminStats].toString()); }} 
+                className="absolute top-4 right-4 p-2 bg-black/30 hover:bg-gradient-brand rounded-full text-white border border-white/5 transition-all z-10 cursor-pointer active:scale-90"
+                title="Edit stat value"
+              >
+                <Edit2 size={14} />
               </button>
-              <h4 className="text-zinc-300 font-medium mb-2">{stat.label}</h4>
-              <div className="text-4xl font-bold">{stats[stat.key as keyof AdminStats]}</div>
+              <h4 className="text-zinc-400 text-xs font-black uppercase tracking-widest mb-3">{stat.label}</h4>
+              <div className="text-4xl font-black text-white tracking-tight">
+                {stat.prefix || ''}{stats[stat.key as keyof AdminStats]}
+              </div>
             </div>
           ))}
         </motion.div>
@@ -246,73 +320,89 @@ export function Admin() {
 
       {activeTab === 'products' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <button onClick={() => { setEditingProduct(null); setProductForm({ name: '', category: '', price: 0, rating: 5, description: '', inStock: true, imageUrl: '' }); setIsProductModalOpen(true); }} className="mb-6 flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-xl transition-colors">
-            <Plus size={20} /> Add New Product
+          <button 
+            onClick={() => { setEditingProduct(null); setProductForm({ name: '', category: '', price: 0, rating: 5, description: '', inStock: true, imageUrl: '' }); setIsProductModalOpen(true); }} 
+            className="mb-8 flex items-center gap-2 bg-gradient-brand hover:scale-[1.02] text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-wider border border-white/10 shadow-lg shadow-brand-rose/15 cursor-pointer transition-all"
+          >
+            <Plus size={16} /> Add New Product
           </button>
-          <div className="bg-bg-panel border border-zinc-800 rounded-3xl overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-zinc-900 border-b border-zinc-800">
-                <tr>
-                  <th className="p-4 font-medium text-zinc-400">Product</th>
-                  <th className="p-4 font-medium text-zinc-400">Category</th>
-                  <th className="p-4 font-medium text-zinc-400">Price</th>
-                  <th className="p-4 font-medium text-zinc-400">Stock</th>
-                  <th className="p-4 font-medium text-zinc-400 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map(p => (
-                  <tr key={p.id} className="border-b border-zinc-800/50 hover:bg-zinc-900/50">
-                    <td className="p-4 font-medium flex items-center gap-3">
-                      <div className="w-10 h-10 rounded bg-zinc-800 overflow-hidden flex-shrink-0">
-                        {p.imageUrl && <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />}
-                      </div>
-                      {p.name}
-                    </td>
-                    <td className="p-4">{p.category}</td>
-                    <td className="p-4">₹{p.price}</td>
-                    <td className="p-4"><span className={`px-2 py-1 rounded text-xs ${p.inStock ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>{p.inStock ? 'Yes' : 'No'}</span></td>
-                    <td className="p-4 text-right">
-                      <button onClick={() => { setEditingProduct(p); setProductForm(p); setIsProductModalOpen(true); }} className="p-2 text-zinc-400 hover:text-white"><Edit2 size={18} /></button>
-                      <button onClick={() => deleteProduct(p.id)} className="p-2 text-zinc-400 hover:text-brand-red"><Trash2 size={18} /></button>
-                    </td>
+          
+          <div className="glass-panel border-white/8 rounded-[28px] overflow-hidden shadow-2xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-white/[0.02] border-b border-white/8">
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Product</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Category</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Price</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Stock</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {products.map(p => (
+                    <tr key={p.id} className="border-b border-white/4 hover:bg-white/[0.01] transition-colors">
+                      <td className="p-4 md:p-5 font-extrabold text-white flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 overflow-hidden flex-shrink-0">
+                          {p.imageUrl && <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />}
+                        </div>
+                        <span className="truncate max-w-[150px] md:max-w-[240px]">{p.name}</span>
+                      </td>
+                      <td className="p-4 md:p-5 text-sm text-zinc-300 font-medium">{p.category}</td>
+                      <td className="p-4 md:p-5 text-sm text-white font-extrabold">₹{p.price}</td>
+                      <td className="p-4 md:p-5">
+                        <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${p.inStock ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'}`}>
+                          {p.inStock ? 'In Stock' : 'Out'}
+                        </span>
+                      </td>
+                      <td className="p-4 md:p-5 text-right">
+                        <button onClick={() => { setEditingProduct(p); setProductForm(p); setIsProductModalOpen(true); }} className="p-2 text-zinc-400 hover:text-brand-blue transition-colors cursor-pointer" title="Edit"><Edit2 size={16} /></button>
+                        <button onClick={() => deleteProduct(p.id)} className="p-2 text-zinc-400 hover:text-brand-rose transition-colors cursor-pointer" title="Delete"><Trash2 size={16} /></button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </motion.div>
       )}
 
       {activeTab === 'offers' && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <button onClick={() => { setEditingOffer(null); setOfferForm({ code: '', description: '', discount: '', expiryDate: '' }); setIsOfferModalOpen(true); }} className="mb-6 flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-xl transition-colors">
-            <Plus size={20} /> Add New Offer
+          <button 
+            onClick={() => { setEditingOffer(null); setOfferForm({ code: '', description: '', discount: '', expiryDate: '' }); setIsOfferModalOpen(true); }} 
+            className="mb-8 flex items-center gap-2 bg-gradient-brand hover:scale-[1.02] text-white px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-wider border border-white/10 shadow-lg shadow-brand-rose/15 cursor-pointer transition-all"
+          >
+            <Plus size={16} /> Add New Offer
           </button>
-          <div className="bg-bg-panel border border-zinc-800 rounded-3xl overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-zinc-900 border-b border-zinc-800">
-                <tr>
-                  <th className="p-4 font-medium text-zinc-400">Code</th>
-                  <th className="p-4 font-medium text-zinc-400">Discount</th>
-                  <th className="p-4 font-medium text-zinc-400">Expiry</th>
-                  <th className="p-4 font-medium text-zinc-400 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {offers.map(o => (
-                  <tr key={o.id} className="border-b border-zinc-800/50 hover:bg-zinc-900/50">
-                    <td className="p-4 font-bold text-brand-red">{o.code}</td>
-                    <td className="p-4">{o.discount}</td>
-                    <td className="p-4">{new Date(o.expiryDate).toLocaleDateString()}</td>
-                    <td className="p-4 text-right">
-                      <button onClick={() => { setEditingOffer(o); setOfferForm(o); setIsOfferModalOpen(true); }} className="p-2 text-zinc-400 hover:text-white"><Edit2 size={18} /></button>
-                      <button onClick={() => deleteOffer(o.id)} className="p-2 text-zinc-400 hover:text-brand-red"><Trash2 size={18} /></button>
-                    </td>
+          
+          <div className="glass-panel border-white/8 rounded-[28px] overflow-hidden shadow-2xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-white/[0.02] border-b border-white/8">
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Code</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Discount</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest">Expiry</th>
+                    <th className="p-4 md:p-5 text-[10px] font-black text-brand-blue uppercase tracking-widest text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {offers.map(o => (
+                    <tr key={o.id} className="border-b border-white/4 hover:bg-white/[0.01] transition-colors">
+                      <td className="p-4 md:p-5 font-black text-brand-rose tracking-wider font-mono text-base">{o.code}</td>
+                      <td className="p-4 md:p-5 text-sm font-extrabold text-white">{o.discount}</td>
+                      <td className="p-4 md:p-5 text-sm text-zinc-300 font-medium">{new Date(o.expiryDate).toLocaleDateString()}</td>
+                      <td className="p-4 md:p-5 text-right">
+                        <button onClick={() => { setEditingOffer(o); setOfferForm(o); setIsOfferModalOpen(true); }} className="p-2 text-zinc-400 hover:text-brand-blue transition-colors cursor-pointer" title="Edit"><Edit2 size={16} /></button>
+                        <button onClick={() => deleteOffer(o.id)} className="p-2 text-zinc-400 hover:text-brand-rose transition-colors cursor-pointer" title="Delete"><Trash2 size={16} /></button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </motion.div>
       )}
@@ -320,84 +410,155 @@ export function Admin() {
       {/* Stat Edit Modal */}
       <AnimatePresence>
         {editingStat && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-bg-dark border border-zinc-800 rounded-3xl p-8 w-full max-w-sm relative">
-              <h3 className="text-xl font-bold mb-4">Edit {editingStat}</h3>
-              <input type="number" value={statEditValue} onChange={e => setStatEditValue(e.target.value)} className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 mb-6 outline-none focus:border-brand-red" />
-              <div className="flex gap-3">
-                <button onClick={() => setEditingStat(null)} className="flex-1 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-colors">Cancel</button>
-                <button onClick={saveStat} className="flex-1 py-3 rounded-xl bg-brand-red hover:bg-red-600 transition-colors">Save</button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setEditingStat(null)} 
+              className="absolute inset-0 bg-black/60 backdrop-blur-md" 
+            />
+            <motion.div 
+              initial={{ scale: 0.94, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              exit={{ scale: 0.94, opacity: 0 }} 
+              className="glass-panel bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-[32px] p-8 w-full max-w-sm relative z-10 shadow-2xl"
+            >
+              <h3 className="text-xl font-black text-white uppercase tracking-wider mb-6">Edit {editingStat}</h3>
+              <input 
+                type="number" 
+                value={statEditValue} 
+                onChange={e => setStatEditValue(e.target.value)} 
+                className="w-full bg-white/[0.02] border border-white/10 rounded-2xl px-4 py-4 mb-8 outline-none text-white text-lg font-black text-center focus:border-brand-violet/50 focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" 
+              />
+              <div className="flex gap-3.5">
+                <button 
+                  onClick={() => setEditingStat(null)} 
+                  className="flex-1 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-widest border border-white/5 transition-all cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={saveStat} 
+                  className="flex-1 py-4 rounded-2xl bg-gradient-brand text-white font-bold text-xs uppercase tracking-widest border border-white/10 shadow-lg shadow-brand-rose/25 transition-all cursor-pointer"
+                >
+                  Save
+                </button>
               </div>
             </motion.div>
           </div>
         )}
 
         {isProductModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-bg-dark border border-zinc-800 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
-              <button onClick={() => setIsProductModalOpen(false)} className="absolute top-6 right-6 text-zinc-400 hover:text-white"><X size={24} /></button>
-              <h3 className="text-2xl font-bold mb-6">{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setIsProductModalOpen(false)} 
+              className="absolute inset-0 bg-black/60 backdrop-blur-md" 
+            />
+            <motion.div 
+              initial={{ scale: 0.94, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              exit={{ scale: 0.94, opacity: 0 }} 
+              className="glass-panel bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-[32px] p-8 md:p-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative z-10 shadow-2xl"
+            >
+              <button 
+                onClick={() => setIsProductModalOpen(false)} 
+                className="absolute top-6 right-6 p-2 bg-white/5 hover:bg-white/10 text-white border border-white/5 rounded-full transition-all cursor-pointer active:scale-90"
+              >
+                <X size={18} />
+              </button>
+              <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-8">{editingProduct ? 'Edit Product' : 'Add Product'}</h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Name</label>
-                  <input value={productForm.name} onChange={e => setProductForm({...productForm, name: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Name</label>
+                  <input value={productForm.name} onChange={e => setProductForm({...productForm, name: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Category</label>
-                  <input value={productForm.category} onChange={e => setProductForm({...productForm, category: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Category</label>
+                  <input value={productForm.category} onChange={e => setProductForm({...productForm, category: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Price (₹)</label>
-                  <input type="number" value={productForm.price} onChange={e => setProductForm({...productForm, price: Number(e.target.value)})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Price (₹)</label>
+                  <input type="number" value={productForm.price} onChange={e => setProductForm({...productForm, price: Number(e.target.value)})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Rating (0-5)</label>
-                  <input type="number" step="0.1" value={productForm.rating} onChange={e => setProductForm({...productForm, rating: Number(e.target.value)})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Rating (0-5)</label>
+                  <input type="number" step="0.1" value={productForm.rating} onChange={e => setProductForm({...productForm, rating: Number(e.target.value)})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" />
                 </div>
-                <div className="flex flex-col gap-1 md:col-span-2">
-                  <label className="text-sm text-zinc-400">Image URL</label>
-                  <input value={productForm.imageUrl} onChange={e => setProductForm({...productForm, imageUrl: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" placeholder="https://..." />
+                <div className="flex flex-col gap-2 md:col-span-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Image URL</label>
+                  <input value={productForm.imageUrl} onChange={e => setProductForm({...productForm, imageUrl: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" placeholder="https://..." />
                 </div>
-                <div className="flex flex-col gap-1 md:col-span-2">
-                  <label className="text-sm text-zinc-400">Description</label>
-                  <textarea value={productForm.description} onChange={e => setProductForm({...productForm, description: e.target.value})} rows={3} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red resize-none" />
+                <div className="flex flex-col gap-2 md:col-span-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Description</label>
+                  <textarea value={productForm.description} onChange={e => setProductForm({...productForm, description: e.target.value})} rows={3} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] resize-none transition-all" />
                 </div>
                 <div className="flex items-center gap-3 mt-2 md:col-span-2">
-                  <input type="checkbox" checked={productForm.inStock} onChange={e => setProductForm({...productForm, inStock: e.target.checked})} className="w-5 h-5 accent-brand-red" id="stock" />
-                  <label htmlFor="stock" className="font-medium">In Stock</label>
+                  <input type="checkbox" checked={productForm.inStock} onChange={e => setProductForm({...productForm, inStock: e.target.checked})} className="w-5 h-5 rounded border-white/10 bg-white/5 accent-brand-rose" id="stock" />
+                  <label htmlFor="stock" className="text-xs font-black uppercase tracking-wider text-zinc-300">In Stock</label>
                 </div>
               </div>
-              <button onClick={saveProduct} className="w-full mt-8 bg-brand-red hover:bg-red-600 text-white py-4 rounded-xl font-bold transition-colors">Save Product</button>
+              <button 
+                onClick={saveProduct} 
+                className="w-full mt-8 bg-gradient-brand hover:scale-[1.02] text-white py-4 rounded-2xl font-black uppercase tracking-wider text-sm border border-white/10 shadow-lg shadow-brand-rose/25 transition-all cursor-pointer"
+              >
+                Save Product
+              </button>
             </motion.div>
           </div>
         )}
 
         {isOfferModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-bg-dark border border-zinc-800 rounded-3xl p-8 w-full max-w-md relative">
-              <button onClick={() => setIsOfferModalOpen(false)} className="absolute top-6 right-6 text-zinc-400 hover:text-white"><X size={24} /></button>
-              <h3 className="text-2xl font-bold mb-6">{editingOffer ? 'Edit Offer' : 'Add Offer'}</h3>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setIsOfferModalOpen(false)} 
+              className="absolute inset-0 bg-black/60 backdrop-blur-md" 
+            />
+            <motion.div 
+              initial={{ scale: 0.94, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              exit={{ scale: 0.94, opacity: 0 }} 
+              className="glass-panel bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-[32px] p-8 w-full max-w-md relative z-10 shadow-2xl"
+            >
+              <button 
+                onClick={() => setIsOfferModalOpen(false)} 
+                className="absolute top-6 right-6 p-2 bg-white/5 hover:bg-white/10 text-white border border-white/5 rounded-full transition-all cursor-pointer active:scale-90"
+              >
+                <X size={18} />
+              </button>
+              <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-8">{editingOffer ? 'Edit Offer' : 'Add Offer'}</h3>
               
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Offer Code</label>
-                  <input value={offerForm.code} onChange={e => setOfferForm({...offerForm, code: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red uppercase" placeholder="MKA50" />
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Offer Code</label>
+                  <input value={offerForm.code} onChange={e => setOfferForm({...offerForm, code: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] uppercase transition-all" placeholder="MKA50" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Discount Text</label>
-                  <input value={offerForm.discount} onChange={e => setOfferForm({...offerForm, discount: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" placeholder="50%" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Discount Text</label>
+                  <input value={offerForm.discount} onChange={e => setOfferForm({...offerForm, discount: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" placeholder="50%" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Expiry Date</label>
-                  <input type="date" value={offerForm.expiryDate} onChange={e => setOfferForm({...offerForm, expiryDate: e.target.value})} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Expiry Date</label>
+                  <input type="date" value={offerForm.expiryDate} onChange={e => setOfferForm({...offerForm, expiryDate: e.target.value})} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all" />
                 </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-sm text-zinc-400">Description</label>
-                  <textarea value={offerForm.description} onChange={e => setOfferForm({...offerForm, description: e.target.value})} rows={2} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-brand-red resize-none" />
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-black tracking-widest text-zinc-400 uppercase">Description</label>
+                  <textarea value={offerForm.description} onChange={e => setOfferForm({...offerForm, description: e.target.value})} rows={2} className="bg-white/[0.02] border border-white/10 focus:border-brand-violet/50 rounded-2xl px-4 py-3.5 outline-none text-white text-sm focus:shadow-[0_0_15px_rgba(139,92,246,0.15)] resize-none transition-all" />
                 </div>
               </div>
-              <button onClick={saveOffer} className="w-full mt-8 bg-brand-red hover:bg-red-600 text-white py-4 rounded-xl font-bold transition-colors">Save Offer</button>
+              <button 
+                onClick={saveOffer} 
+                className="w-full mt-8 bg-gradient-brand hover:scale-[1.02] text-white py-4 rounded-2xl font-black uppercase tracking-wider text-sm border border-white/10 shadow-lg shadow-brand-rose/25 transition-all cursor-pointer"
+              >
+                Save Offer
+              </button>
             </motion.div>
           </div>
         )}

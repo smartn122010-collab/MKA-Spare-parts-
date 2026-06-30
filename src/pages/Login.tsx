@@ -20,34 +20,40 @@ export function Login() {
 
   return (
     <div className="h-screen w-full bg-bg-dark flex flex-col relative overflow-hidden items-center justify-center">
-      {/* Background accents */}
+      {/* Background accents in Rose, Violet, and Light Blue */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-red/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-red/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/10 left-1/10 w-[450px] h-[450px] bg-brand-rose/15 rounded-full blur-[140px] animate-float" />
+        <div className="absolute bottom-1/10 right-1/10 w-[500px] h-[500px] bg-brand-violet/15 rounded-full blur-[160px] animate-float-delayed" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-blue/10 rounded-full blur-[120px]" />
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="z-10 bg-bg-panel backdrop-blur-2xl border border-zinc-800/50 p-10 rounded-3xl shadow-2xl flex flex-col items-center max-w-md w-full mx-4"
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="z-10 glass-panel p-10 md:p-12 rounded-[32px] shadow-[0_32px_64px_-15px_rgba(0,0,0,0.6)] flex flex-col items-center max-w-md w-full mx-4 border border-white/10"
       >
         <motion.div 
-          animate={{ x: [-20, 0, -20] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="w-24 h-24 rounded-full bg-brand-red mb-8 flex items-center justify-center text-4xl font-bold shadow-[0_0_30px_rgba(220,38,38,0.4)]"
+          animate={{ 
+            y: [-8, 8, -8],
+            rotate: [0, 5, -5, 0]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="w-22 h-22 rounded-2xl bg-gradient-brand mb-8 flex items-center justify-center text-3xl font-black shadow-[0_12px_30px_rgba(244,63,94,0.4)] text-white"
         >
           MKA
         </motion.div>
         
-        <h1 className="text-3xl font-bold tracking-wide mb-2 text-center">M K A MOTORS</h1>
-        <p className="text-zinc-400 mb-10 text-center">Luxury Motor Spare Parts</p>
+        <h1 className="text-3xl font-black tracking-wider mb-2 text-center uppercase text-white">
+          MKA <span className="text-gradient">MOTOR</span>
+        </h1>
+        <p className="text-xs font-bold tracking-widest text-zinc-400 mb-10 text-center uppercase">Two Wheeler Spares</p>
 
         <button 
           onClick={signInWithGoogle}
-          className="w-full flex items-center justify-center gap-3 bg-zinc-100 hover:bg-white text-zinc-900 py-3 px-6 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-[1.02]"
+          className="w-full flex items-center justify-center gap-3 bg-white hover:bg-white/90 text-zinc-950 py-4 px-6 rounded-2xl font-bold transition-all shadow-[0_8px_25px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_35px_rgba(139,92,246,0.3)] hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />

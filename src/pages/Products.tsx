@@ -33,18 +33,21 @@ export function Products() {
   };
 
   return (
-    <div className="p-6 md:p-10 max-w-7xl mx-auto min-h-full">
-      <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-        <span className="w-2 h-8 bg-brand-red rounded-full" />
+    <div className="p-6 md:p-10 max-w-7xl mx-auto min-h-full relative">
+      <h2 className="text-3xl font-black mb-10 flex items-center gap-3">
+        <span className="w-2.5 h-8 bg-gradient-brand rounded-full" />
         Product Catalog
       </h2>
 
       {loading ? (
-        <div className="flex justify-center py-20 text-brand-red animate-pulse">Loading products...</div>
+        <div className="flex flex-col items-center justify-center py-32 text-brand-rose">
+          <div className="w-12 h-12 rounded-full border-4 border-brand-violet/20 border-t-brand-rose animate-spin mb-4" />
+          <p className="font-bold animate-pulse text-sm tracking-wider uppercase">Loading products...</p>
+        </div>
       ) : products.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-32 text-zinc-500">
-          <Package size={64} className="mb-4 opacity-50" />
-          <p className="text-xl">No products currently available.</p>
+          <Package size={64} className="mb-4 opacity-50 text-brand-violet" />
+          <p className="text-xl font-bold">No products currently available.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -55,28 +58,28 @@ export function Products() {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ y: -5 }}
               onClick={() => setSelectedProduct(product)}
-              className="bg-bg-panel border border-zinc-800 rounded-2xl overflow-hidden cursor-pointer hover:border-brand-red/50 transition-colors group"
+              className="glass-panel glass-panel-interactive rounded-[24px] overflow-hidden cursor-pointer group"
             >
-              <div className="h-48 bg-zinc-900 relative overflow-hidden">
+              <div className="h-48 bg-white/[0.02] relative overflow-hidden border-b border-white/6">
                 {product.imageUrl ? (
-                  <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-zinc-600">No Image</div>
+                  <div className="w-full h-full flex items-center justify-center text-zinc-500 font-mono text-xs">No Image</div>
                 )}
                 {!product.inStock && (
-                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
-                    <span className="bg-red-600 text-white px-4 py-1 rounded-full font-bold text-sm">Out of Stock</span>
+                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-sm">
+                    <span className="bg-gradient-brand text-white px-4 py-1.5 rounded-full font-black text-xs uppercase tracking-wider shadow-lg">Out of Stock</span>
                   </div>
                 )}
               </div>
-              <div className="p-5">
-                <div className="text-xs text-brand-red font-semibold mb-1 uppercase tracking-wider">{product.category}</div>
-                <h3 className="font-bold text-lg mb-2 truncate">{product.name}</h3>
+              <div className="p-5.5">
+                <div className="text-[10px] text-brand-blue font-black mb-1 uppercase tracking-widest">{product.category}</div>
+                <h3 className="font-extrabold text-white text-base mb-2.5 truncate group-hover:text-brand-rose transition-colors">{product.name}</h3>
                 <div className="flex items-center justify-between">
-                  <div className="text-xl font-bold">₹{product.price}</div>
-                  <div className="flex items-center text-yellow-500 text-sm">
-                    <Star size={16} className="fill-current mr-1" />
-                    {product.rating}
+                  <div className="text-lg font-black text-white">₹{product.price}</div>
+                  <div className="flex items-center text-yellow-500 text-sm bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
+                    <Star size={13} className="fill-current mr-1" />
+                    <span className="font-bold text-xs">{product.rating}</span>
                   </div>
                 </div>
               </div>
@@ -94,55 +97,56 @@ export function Products() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProduct(null)}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
             />
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.93, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-bg-dark border border-zinc-800 rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 flex flex-col md:flex-row shadow-2xl"
+              exit={{ opacity: 0, scale: 0.93, y: 20 }}
+              transition={{ duration: 0.4, cubicBezier: [0.16, 1, 0.3, 1] }}
+              className="glass-panel bg-white/[0.03] backdrop-blur-3xl border border-white/12 rounded-[32px] w-full max-w-4xl max-h-[90vh] overflow-y-auto relative z-10 flex flex-col md:flex-row shadow-[0_32px_64px_-15px_rgba(0,0,0,0.8)]"
             >
               <button 
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-brand-red rounded-full text-white transition-colors z-20"
+                className="absolute top-4 right-4 p-2.5 bg-black/40 hover:bg-gradient-brand rounded-full text-white transition-all z-20 hover:scale-110 cursor-pointer border border-white/10"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
               
-              <div className="w-full md:w-1/2 h-64 md:h-auto bg-zinc-900 relative">
+              <div className="w-full md:w-1/2 h-64 md:h-auto bg-white/[0.01] relative overflow-hidden border-r border-white/6">
                 {selectedProduct.imageUrl ? (
                    <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-full object-cover" />
                 ) : (
-                   <div className="w-full h-full flex items-center justify-center text-zinc-600">No Image</div>
+                   <div className="w-full h-full flex items-center justify-center text-zinc-500 font-mono text-xs">No Image</div>
                 )}
               </div>
               
               <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col">
-                <div className="text-sm text-brand-red font-bold uppercase tracking-wider mb-2">{selectedProduct.category}</div>
-                <h2 className="text-3xl font-bold mb-4">{selectedProduct.name}</h2>
+                <div className="text-xs text-brand-blue font-black uppercase tracking-widest mb-2">{selectedProduct.category}</div>
+                <h2 className="text-3xl font-black mb-4 text-white uppercase tracking-tight">{selectedProduct.name}</h2>
                 
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="text-3xl font-bold text-white">₹{selectedProduct.price}</span>
-                  <div className="flex items-center bg-zinc-900 px-3 py-1 rounded-full text-yellow-500">
-                    <Star size={16} className="fill-current mr-1" />
-                    <span className="font-bold">{selectedProduct.rating}</span>
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  <span className="text-3xl font-black text-white">₹{selectedProduct.price}</span>
+                  <div className="flex items-center bg-white/5 border border-white/5 px-3 py-1 rounded-full text-yellow-500">
+                    <Star size={15} className="fill-current mr-1.5" />
+                    <span className="font-bold text-sm">{selectedProduct.rating}</span>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${selectedProduct.inStock ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                  <span className={`px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider ${selectedProduct.inStock ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'}`}>
                     {selectedProduct.inStock ? 'In Stock' : 'Out of Stock'}
                   </span>
                 </div>
 
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold mb-2">Description</h4>
-                  <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">{selectedProduct.description}</p>
+                <div className="flex-1 border-t border-white/6 pt-6">
+                  <h4 className="text-base font-extrabold text-white uppercase tracking-wider mb-2.5">Description</h4>
+                  <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">{selectedProduct.description}</p>
                 </div>
 
                 <button 
                   onClick={() => handleOrder(selectedProduct)}
                   disabled={!selectedProduct.inStock}
-                  className="w-full mt-8 flex items-center justify-center gap-2 bg-brand-red hover:bg-red-500 disabled:bg-zinc-800 disabled:text-zinc-500 text-white py-4 rounded-xl font-bold transition-colors text-lg"
+                  className="w-full mt-8 flex items-center justify-center gap-2.5 bg-gradient-brand hover:scale-[1.02] active:scale-[0.98] disabled:bg-white/5 disabled:border-white/5 disabled:scale-100 disabled:text-zinc-500 disabled:shadow-none text-white py-4 rounded-2xl font-bold transition-all text-base shadow-lg shadow-brand-rose/25 cursor-pointer border border-white/10"
                 >
-                  <ShoppingCart size={24} />
+                  <ShoppingCart size={20} />
                   {selectedProduct.inStock ? 'Order Now via WhatsApp' : 'Currently Unavailable'}
                 </button>
               </div>
